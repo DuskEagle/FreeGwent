@@ -1,0 +1,9 @@
+{
+  "id": "albrich",
+  "basePower": 2,
+  "faction": "nilfgaard",
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": []
+}

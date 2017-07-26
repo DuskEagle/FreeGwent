@@ -1,0 +1,9 @@
+{
+  "id": "rottenmangonel",
+  "basePower": 3,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

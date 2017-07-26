@@ -1,0 +1,9 @@
+{
+  "id": "forktail",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

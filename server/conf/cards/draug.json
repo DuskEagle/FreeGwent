@@ -1,0 +1,11 @@
+{
+  "id": "draug",
+  "basePower": 10,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "monsters"
+}

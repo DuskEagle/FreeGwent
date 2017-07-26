@@ -1,0 +1,9 @@
+{
+  "id": "rainfarn",
+  "basePower": 4,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

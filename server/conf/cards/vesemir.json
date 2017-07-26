@@ -1,0 +1,9 @@
+{
+  "id": "vesemir",
+  "basePower": 6,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "neutral"
+}

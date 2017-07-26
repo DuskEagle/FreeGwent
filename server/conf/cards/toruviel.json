@@ -1,0 +1,9 @@
+{
+  "id": "toruviel",
+  "basePower": 2,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

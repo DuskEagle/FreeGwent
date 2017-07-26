@@ -1,0 +1,11 @@
+{
+  "id": "morvan",
+  "basePower": 10,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "nilfgaard"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "bitingfrost",
+  "basePower": null,
+  "combatTypes": [
+    "weather"
+  ],
+  "attributes": [],
+  "faction": "neutral",
+  "copies": 3
+}

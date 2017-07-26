@@ -1,0 +1,9 @@
+{
+  "id": "morteisen",
+  "basePower": 3,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

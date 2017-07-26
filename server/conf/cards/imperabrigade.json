@@ -1,0 +1,13 @@
+{
+  "id": "imperabrigade",
+  "basePower": 3,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "nilfgaard",
+  "tightBondId": "imperabrigade",
+  "copies": 4
+}

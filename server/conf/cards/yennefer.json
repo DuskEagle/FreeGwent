@@ -1,0 +1,12 @@
+{
+  "id": "yennefer",
+  "basePower": 7,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "hero",
+    "medic"
+  ],
+  "faction": "neutral"
+}

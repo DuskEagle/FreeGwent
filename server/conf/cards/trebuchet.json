@@ -1,0 +1,10 @@
+{
+  "id": "trebuchet",
+  "basePower": 6,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "northernrealms",
+  "copies": 2
+}

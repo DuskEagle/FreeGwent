@@ -1,0 +1,9 @@
+{
+  "id": "eredinbringerofdeath",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "eredincommanderofredriders",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

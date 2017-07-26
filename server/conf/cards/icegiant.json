@@ -1,0 +1,9 @@
+{
+  "id": "icegiant",
+  "basePower": 5,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

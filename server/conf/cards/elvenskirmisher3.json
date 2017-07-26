@@ -1,0 +1,12 @@
+{
+  "id": "elvenskirmisher3",
+  "basePower": 2,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "scoiatael",
+  "musterId": "elvenskirmisher"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "dunbannermedic",
+  "basePower": 5,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "medic"
+  ],
+  "faction": "northernrealms"
+}

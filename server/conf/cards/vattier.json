@@ -1,0 +1,11 @@
+{
+  "id": "vattier",
+  "basePower": 4,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "nilfgaard"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "sile",
+  "basePower": 5,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

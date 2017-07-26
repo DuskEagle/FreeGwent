@@ -1,0 +1,9 @@
+{
+  "id": "dethmold",
+  "basePower": 6,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

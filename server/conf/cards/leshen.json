@@ -1,0 +1,11 @@
+{
+  "id": "leshen",
+  "basePower": 10,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "monsters"
+}

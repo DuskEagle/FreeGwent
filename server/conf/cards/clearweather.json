@@ -1,0 +1,10 @@
+{
+  "id": "clearweather",
+  "basePower": null,
+  "combatTypes": [
+    "weather"
+  ],
+  "attributes": [],
+  "faction": "neutral",
+  "copies": 2
+}

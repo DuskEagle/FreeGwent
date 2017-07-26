@@ -1,0 +1,9 @@
+{
+  "id": "folteststeelforged",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

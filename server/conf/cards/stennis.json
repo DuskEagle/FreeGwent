@@ -1,0 +1,11 @@
+{
+  "id": "stennis",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "northernrealms"
+}

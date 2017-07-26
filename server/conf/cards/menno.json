@@ -1,0 +1,12 @@
+{
+  "id": "menno",
+  "basePower": 10,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero",
+    "medic"
+  ],
+  "faction": "nilfgaard"
+}

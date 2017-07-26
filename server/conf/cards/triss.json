@@ -1,0 +1,11 @@
+{
+  "id": "triss",
+  "basePower": 7,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "neutral"
+}

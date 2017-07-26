@@ -1,0 +1,12 @@
+{
+  "id": "isengrim",
+  "basePower": 10,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "moraleBoost",
+    "hero"
+  ],
+  "faction": "scoiatael"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "siegetechnician",
+  "basePower": 0,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "medic"
+  ],
+  "faction": "nilfgaard"
+}

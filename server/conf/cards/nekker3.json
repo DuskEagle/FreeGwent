@@ -1,0 +1,12 @@
+{
+  "id": "nekker3",
+  "basePower": 2,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "monsters",
+  "musterId": "nekker"
+}

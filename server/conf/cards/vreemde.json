@@ -1,0 +1,9 @@
+{
+  "id": "vreemde",
+  "basePower": 2,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

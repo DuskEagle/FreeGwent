@@ -1,0 +1,12 @@
+{
+  "id": "arachasbehemoth",
+  "basePower": 6,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "monsters",
+  "musterId": "arachas"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "dolarcher",
+  "basePower": 4,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

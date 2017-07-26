@@ -1,0 +1,11 @@
+{
+  "id": "shilard",
+  "basePower": 7,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "nilfgaard"
+}

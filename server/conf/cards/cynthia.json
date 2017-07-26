@@ -1,0 +1,9 @@
+{
+  "id": "cynthia",
+  "basePower": 4,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

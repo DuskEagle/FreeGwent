@@ -1,0 +1,9 @@
+{
+  "id": "vriheddbrigade",
+  "basePower": 4,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

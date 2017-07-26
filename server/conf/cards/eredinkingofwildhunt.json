@@ -1,0 +1,9 @@
+{
+  "id": "eredinkingofwildhunt",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

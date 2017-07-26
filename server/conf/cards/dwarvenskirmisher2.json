@@ -1,0 +1,12 @@
+{
+  "id": "dwarvenskirmisher2",
+  "basePower": 3,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "scoiatael",
+  "musterId": "dwarvenskirmisher"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "foltestsiegemaster",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

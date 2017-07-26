@@ -1,0 +1,9 @@
+{
+  "id": "heavyfirescropion",
+  "basePower": 10,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

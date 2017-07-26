@@ -1,0 +1,9 @@
+{
+  "id": "sweers",
+  "basePower": 2,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

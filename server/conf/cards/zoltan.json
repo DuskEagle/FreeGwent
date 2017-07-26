@@ -1,0 +1,9 @@
+{
+  "id": "zoltan",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "neutral"
+}

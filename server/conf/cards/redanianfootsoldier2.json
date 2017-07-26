@@ -1,0 +1,9 @@
+{
+  "id": "redanianfootsoldier2",
+  "basePower": 1,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

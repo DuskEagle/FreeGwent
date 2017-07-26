@@ -1,0 +1,11 @@
+{
+  "id": "etolianarchers2",
+  "basePower": 1,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "medic"
+  ],
+  "faction": "nilfgaard"
+}

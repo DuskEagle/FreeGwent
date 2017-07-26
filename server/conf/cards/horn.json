@@ -1,0 +1,10 @@
+{
+  "id": "horn",
+  "basePower": null,
+  "combatTypes": [
+    "horn"
+  ],
+  "attributes": [],
+  "faction": "neutral",
+  "copies": 3
+}

@@ -1,0 +1,9 @@
+{
+  "id": "mahakaman2",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "eithne",
+  "basePower": 10,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "scoiatael"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "catapult",
+  "basePower": 8,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "northernrealms",
+  "tightBondId": "catapult",
+  "copies": 2
+}

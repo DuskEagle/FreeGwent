@@ -1,0 +1,9 @@
+{
+  "id": "sabrina",
+  "basePower": 4,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

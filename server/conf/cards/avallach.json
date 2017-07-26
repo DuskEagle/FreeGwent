@@ -1,0 +1,12 @@
+{
+  "id": "avallach",
+  "basePower": 0,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero",
+    "spy"
+  ],
+  "faction": "neutral"
+}

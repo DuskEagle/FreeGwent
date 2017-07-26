@@ -1,0 +1,14 @@
+{
+  "id": "decoy",
+  "basePower": null,
+  "combatTypes": [
+    "melee",
+    "ranged",
+    "siege"
+  ],
+  "attributes": [
+    "decoy"
+  ],
+  "faction": "neutral",
+  "copies": 3
+}

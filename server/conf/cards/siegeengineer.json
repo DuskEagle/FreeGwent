@@ -1,0 +1,9 @@
+{
+  "id": "siegeengineer",
+  "basePower": 6,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "harpy",
+  "basePower": 2,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

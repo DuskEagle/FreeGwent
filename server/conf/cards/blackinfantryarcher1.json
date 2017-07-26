@@ -1,0 +1,9 @@
+{
+  "id": "blackinfantryarcher1",
+  "basePower": 10,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

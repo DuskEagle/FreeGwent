@@ -1,0 +1,13 @@
+{
+  "id": "nausicaacavalry",
+  "basePower": 2,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "nilfgaard",
+  "tightBondId": "nausicaacavalry",
+  "copies": 3
+}

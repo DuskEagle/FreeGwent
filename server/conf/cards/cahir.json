@@ -1,0 +1,9 @@
+{
+  "id": "cahir",
+  "basePower": 6,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "dandelion",
+  "basePower": 2,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "horn"
+  ],
+  "faction": "neutral"
+}

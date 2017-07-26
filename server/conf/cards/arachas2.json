@@ -1,0 +1,12 @@
+{
+  "id": "arachas2",
+  "basePower": 4,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "monsters",
+  "musterId": "arachas"
+}

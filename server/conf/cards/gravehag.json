@@ -1,0 +1,9 @@
+{
+  "id": "gravehag",
+  "basePower": 5,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

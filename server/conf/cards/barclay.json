@@ -1,0 +1,10 @@
+{
+  "id": "barclay",
+  "basePower": 6,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

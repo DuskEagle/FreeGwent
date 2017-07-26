@@ -1,0 +1,13 @@
+{
+  "id": "bluestripes",
+  "basePower": 4,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "northernrealms",
+  "tightBondId": "bluestripes",
+  "copies": 3
+}

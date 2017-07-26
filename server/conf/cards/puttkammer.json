@@ -1,0 +1,9 @@
+{
+  "id": "puttkammer",
+  "basePower": 3,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

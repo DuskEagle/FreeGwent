@@ -1,0 +1,13 @@
+{
+  "id": "poorfuckinginfantry",
+  "basePower": 1,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "northernrealms",
+  "tightBondId": "poorfuckinginfantry",
+  "copies": 3
+}

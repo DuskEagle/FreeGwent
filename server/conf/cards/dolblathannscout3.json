@@ -1,0 +1,10 @@
+{
+  "id": "dolblathannscout3",
+  "basePower": 6,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

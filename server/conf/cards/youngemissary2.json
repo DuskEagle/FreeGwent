@@ -1,0 +1,12 @@
+{
+  "id": "youngemissary2",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "nilfgaard",
+  "tightBondId": "youngemissary"
+}

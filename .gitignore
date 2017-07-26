@@ -1,0 +1,8 @@
+client/Library/
+client/Temp/
+.idea/
+target/
+.vs/
+*.iml
+*.csproj
+*.sln

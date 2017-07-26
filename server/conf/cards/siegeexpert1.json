@@ -1,0 +1,11 @@
+{
+  "id": "siegeexpert1",
+  "basePower": 1,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "moraleBoost"
+  ],
+  "faction": "northernrealms"
+}

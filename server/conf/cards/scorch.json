@@ -1,0 +1,10 @@
+{
+  "id": "scorch",
+  "basePower": null,
+  "combatTypes": [
+    "scorch"
+  ],
+  "attributes": [],
+  "faction": "neutral",
+  "copies": 3
+}

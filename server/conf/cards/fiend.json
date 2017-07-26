@@ -1,0 +1,9 @@
+{
+  "id": "fiend",
+  "basePower": 6,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

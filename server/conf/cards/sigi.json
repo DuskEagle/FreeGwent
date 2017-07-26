@@ -1,0 +1,11 @@
+{
+  "id": "sigi",
+  "basePower": 4,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "northernrealms"
+}

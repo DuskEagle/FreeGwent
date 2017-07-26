@@ -1,0 +1,9 @@
+{
+  "id": "fringilla",
+  "basePower": 6,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

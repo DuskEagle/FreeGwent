@@ -1,0 +1,9 @@
+{
+  "id": "dennis",
+  "basePower": 6,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

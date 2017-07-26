@@ -1,0 +1,11 @@
+{
+  "id": "milva",
+  "basePower": 10,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "moraleBoost"
+  ],
+  "faction": "scoiatael"
+}

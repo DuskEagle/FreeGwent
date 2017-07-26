@@ -1,0 +1,13 @@
+{
+  "id": "crinfrid",
+  "basePower": 5,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "tightBond"
+  ],
+  "faction": "northernrealms",
+  "tightBondId": "crinfrid",
+  "copies": 3
+}

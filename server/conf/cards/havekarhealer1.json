@@ -1,0 +1,11 @@
+{
+  "id": "havekarhealer1",
+  "basePower": 0,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "medic"
+  ],
+  "faction": "scoiatael"
+}

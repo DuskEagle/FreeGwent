@@ -1,0 +1,9 @@
+{
+  "id": "firescorpion",
+  "basePower": 5,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

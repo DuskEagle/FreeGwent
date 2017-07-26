@@ -1,0 +1,9 @@
+{
+  "id": "fireelemental",
+  "basePower": 6,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

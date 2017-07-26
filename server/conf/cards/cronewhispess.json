@@ -1,0 +1,12 @@
+{
+  "id": "cronewhispess",
+  "basePower": 6,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "monsters",
+  "musterId": "crone"
+}

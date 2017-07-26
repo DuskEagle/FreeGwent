@@ -1,0 +1,9 @@
+{
+  "id": "ida",
+  "basePower": 6,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

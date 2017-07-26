@@ -1,0 +1,9 @@
+{
+  "id": "yarpen",
+  "basePower": 2,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

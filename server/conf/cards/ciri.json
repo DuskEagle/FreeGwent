@@ -1,0 +1,11 @@
+{
+  "id": "ciri",
+  "basePower": 15,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "neutral"
+}

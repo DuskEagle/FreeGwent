@@ -1,0 +1,12 @@
+{
+  "id": "havekarsmuggler3",
+  "basePower": 5,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "scoiatael",
+  "musterId": "havekarsmuggler"
+}

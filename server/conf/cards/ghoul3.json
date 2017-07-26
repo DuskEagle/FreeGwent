@@ -1,0 +1,12 @@
+{
+  "id": "ghoul3",
+  "basePower": 1,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "muster"
+  ],
+  "faction": "monsters",
+  "musterId": "ghoul"
+}

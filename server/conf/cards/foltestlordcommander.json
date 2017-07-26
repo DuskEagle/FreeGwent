@@ -1,0 +1,9 @@
+{
+  "id": "foltestlordcommander",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

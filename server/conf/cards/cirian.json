@@ -1,0 +1,10 @@
+{
+  "id": "cirian",
+  "basePower": 3,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

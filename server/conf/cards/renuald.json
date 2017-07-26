@@ -1,0 +1,9 @@
+{
+  "id": "renuald",
+  "basePower": 5,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "nilfgaard"
+}

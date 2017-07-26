@@ -1,0 +1,9 @@
+{
+  "id": "wyvern",
+  "basePower": 2,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

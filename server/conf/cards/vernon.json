@@ -1,0 +1,11 @@
+{
+  "id": "vernon",
+  "basePower": 10,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "northernrealms"
+}

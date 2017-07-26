@@ -1,0 +1,10 @@
+{
+  "id": "vriheddveteran1",
+  "basePower": 5,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

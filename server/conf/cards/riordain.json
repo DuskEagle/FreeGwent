@@ -1,0 +1,9 @@
+{
+  "id": "riordain",
+  "basePower": 1,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "scoiatael"
+}

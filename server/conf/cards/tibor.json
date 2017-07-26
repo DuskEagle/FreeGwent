@@ -1,0 +1,11 @@
+{
+  "id": "tibor",
+  "basePower": 10,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [
+    "hero"
+  ],
+  "faction": "nilfgaard"
+}

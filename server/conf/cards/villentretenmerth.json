@@ -1,0 +1,11 @@
+{
+  "id": "villentretenmerth",
+  "basePower": 7,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "scorchMelee"
+  ],
+  "faction": "neutral"
+}

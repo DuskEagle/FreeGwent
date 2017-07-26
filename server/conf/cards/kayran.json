@@ -1,0 +1,13 @@
+{
+  "id": "kayran",
+  "basePower": 8,
+  "combatTypes": [
+    "melee",
+    "ranged"
+  ],
+  "attributes": [
+    "moraleBoost",
+    "hero"
+  ],
+  "faction": "monsters"
+}

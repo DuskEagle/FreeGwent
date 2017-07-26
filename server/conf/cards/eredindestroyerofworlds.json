@@ -1,0 +1,9 @@
+{
+  "id": "eredindestroyerofworlds",
+  "basePower": null,
+  "combatTypes": [
+    "leader"
+  ],
+  "attributes": [],
+  "faction": "monsters"
+}

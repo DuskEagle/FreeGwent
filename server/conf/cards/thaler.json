@@ -1,0 +1,11 @@
+{
+  "id": "thaler",
+  "basePower": 1,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "northernrealms"
+}

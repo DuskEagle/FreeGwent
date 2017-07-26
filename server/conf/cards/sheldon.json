@@ -1,0 +1,9 @@
+{
+  "id": "sheldon",
+  "basePower": 4,
+  "combatTypes": [
+    "ranged"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

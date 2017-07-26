@@ -1,0 +1,9 @@
+{
+  "id": "siegetower",
+  "basePower": 6,
+  "combatTypes": [
+    "siege"
+  ],
+  "attributes": [],
+  "faction": "northernrealms"
+}

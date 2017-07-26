@@ -1,0 +1,11 @@
+{
+  "id": "stefan",
+  "basePower": 9,
+  "combatTypes": [
+    "melee"
+  ],
+  "attributes": [
+    "spy"
+  ],
+  "faction": "nilfgaard"
+}
