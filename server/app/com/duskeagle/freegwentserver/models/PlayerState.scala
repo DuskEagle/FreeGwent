@@ -113,6 +113,8 @@ case class MulliganPlayerState(
     actor = actor,
     hand = hand,
     deck = deck,
+    discardPile = DiscardPile(cards = Nil),
+    life = 2,
     passed = false
   )
 }
@@ -122,5 +124,13 @@ case class InGamePlayerState(
   actor: ActorRef,
   hand: Hand,
   deck: Deck,
+  discardPile: DiscardPile,
+  life: Int,
   passed: Boolean
-) extends PlayerState
+) extends PlayerState {
+
+  def loseALife: InGamePlayerState = {
+    copy(life = life - 1)
+  }
+
+}

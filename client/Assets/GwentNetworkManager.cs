@@ -180,4 +180,9 @@ public class GwentNetworkManager : MonoBehaviour {
         );
     }
 
+    public void Pass() {
+        TurnEvent passEvent = TurnEvent.Pass();
+        SendTurn(new List<TurnEvent> { passEvent });
+    }
+
 }

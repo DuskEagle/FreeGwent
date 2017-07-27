@@ -85,14 +85,14 @@ case class InGameState(
     } else {
       board.flip
     }
-    val ourTurn = if (mockGame) true else player1sTurn ^ toPlayer.id == player2.id
+    val ourTurn = player1sTurn ^ (toPlayer.id == player2.id)
     GameStateMessage(
       board = boardRotation,
       hand = toPlayer.hand.cards,
-      ourDiscardPile = Nil,
-      theirDiscardPile = Nil,
-      ourLife = 2,
-      theirLife = 2,
+      ourDiscardPile = toPlayer.discardPile.cards,
+      theirDiscardPile = otherPlayer.discardPile.cards,
+      ourLife = toPlayer.life,
+      theirLife = otherPlayer.life,
       theirHandCount = otherPlayer.hand.cards.size,
       ourDeckCount = toPlayer.deck.cards.size,
       theirDeckCount = otherPlayer.deck.cards.size,
@@ -116,13 +116,75 @@ case class InGameState(
     val newGame = events.events.headOption match {
       case None => this
       case Some(event) =>
-        if (event.pass.getOrElse(false)) {
+        if (event.pass) {
           passMove(player, event)
         } else {
           nonPassMove(player, event)
         }
     }
-    newGame.copy(player1sTurn = if (mockGame) player1sTurn else !player1sTurn)
+
+    if (newGame.player1.passed && newGame.player2.passed) {
+      println("Round end")
+      roundEnd
+    } else {
+      val p1sTurn = if (mockGame) {
+        player1sTurn
+      } else {
+        if (newGame.player1.passed && newGame.player2.passed) {
+          println("Round end")
+          true
+        } else if (newGame.player1.passed) {
+          false
+        } else if (newGame.player2.passed) {
+          true
+        } else {
+          !player1sTurn
+        }
+      }
+      newGame.copy(player1sTurn = p1sTurn)
+    }
+  }
+
+  private def roundEnd: InGameState = {
+    val p1Score = board.melee1.score + board.ranged1.score + board.siege1.score
+    val p2Score = board.melee2.score + board.ranged2.score + board.siege2.score
+
+    var p1 = player1
+    var p2 = player2
+    var p1sTurn = player1sTurn
+
+    // If a player wins, they go first next round.
+    // In case of a tie, both players lose a life
+    // and the player who passed first goes first
+    // next round.
+    if (p1Score < p2Score) {
+      p1 = p1.loseALife
+      p1sTurn = false
+    } else if (p2Score < p1Score) {
+      p2 = p2.loseALife
+      p1sTurn = true
+    } else {
+      p1 = p1.loseALife
+      p2 = p2.loseALife
+    }
+
+    if (p1.life <= 0 || p2.life <= 0) {
+      println("Game over") // Handle game end here
+    }
+    p1 = p1.copy(
+      discardPile = p1.discardPile.add(
+        board.melee1.cards ++ board.ranged1.cards ++ board.siege1.cards
+      ),
+      passed = false
+    )
+    p2 = p2.copy(
+      discardPile = p2.discardPile.add(
+        board.melee2.cards ++ board.ranged2.cards ++ board.siege2.cards
+      ),
+      passed = false
+    )
+    copy(player1 = p1, player2 = p2, BoardState.empty, player1sTurn = p1sTurn)
+
   }
 
   private def passMove(player: InGamePlayerState, event: TurnEvent): InGameState = {

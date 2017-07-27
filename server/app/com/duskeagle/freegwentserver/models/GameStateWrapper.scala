@@ -19,8 +19,6 @@ class GameStateWrapper() {
               stateOpt = Some(newState)
               Some(Json.toJson[Hand](newState.getPlayer(id).hand).toString)
             case gameState: InGameState if message == "game start" =>
-//              gameState.player1.actor ! gameState
-//              gameState.player2.actor ! gameState
               Some(gameState.gameStateMessageString(id))
             case gameState: InGameState =>
               //Update gameState here, if it's this player's turn
@@ -29,8 +27,6 @@ class GameStateWrapper() {
               if (newState.mockGame) {
                 newState.player2.actor ! newState
               } else {
-                println(s"player1 is ${newState.player1.actor.path}")
-                println(s"player2 is ${newState.player2.actor.path}")
                 newState.player1.actor ! newState
                 newState.player2.actor ! newState
               }

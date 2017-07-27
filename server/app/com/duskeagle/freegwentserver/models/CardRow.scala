@@ -24,6 +24,10 @@ case class CardRow(
     copy(cards = newNonHeroCards ++ heroCards)
   }
 
+  def score: Int = {
+    cards.map { _.currentPower.getOrElse(0) }.sum
+  }
+
   private def resetCurrentPower(cards: List[Card]): List[Card] = {
     cards.map { card =>
       card.copy(currentPower = card.basePower)
