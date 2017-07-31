@@ -9,7 +9,8 @@ public class SelectedCards : DeckBuilderCardSlot {
     [SerializeField] private LeaderCountText leaderCountText;
     [SerializeField] private SubmitButton submitButton;
 
-    private void PropagateCardChanges(IList<DeckBuilderCard> cards) {
+    private void PropagateCardChanges() {
+        IList<DeckBuilderCard> cards = GetCards();
         unitCountText.UpdateText(cards);
         specialCountText.UpdateText(cards);
         leaderCountText.UpdateText(cards);
@@ -18,11 +19,17 @@ public class SelectedCards : DeckBuilderCardSlot {
 
     override public void AddCard(DeckBuilderCard card) {
         base.AddCard(card);
-        PropagateCardChanges(GetCards());
+        PropagateCardChanges();
     }
 
     override protected void RemoveCard(DeckBuilderCard card) {
         base.RemoveCard(card);
-        PropagateCardChanges(GetCards());
+        PropagateCardChanges();
+    }
+
+    override public IList<DeckBuilderCard> RemoveAllCards() {
+        IList<DeckBuilderCard> result = base.RemoveAllCards();
+        PropagateCardChanges();
+        return result;
     }
 }

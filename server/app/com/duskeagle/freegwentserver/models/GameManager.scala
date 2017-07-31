@@ -65,7 +65,7 @@ object GameManager {
         actor = actor,
         hand = Hand(mockHand),
         deck = Deck(mockDeck),
-        discardPile = DiscardPile(Nil),
+        discardPile = DiscardPile(mockDeck),
         life = 2,
         passed = false
       )

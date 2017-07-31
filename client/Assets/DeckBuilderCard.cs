@@ -10,12 +10,14 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
 
     public DeckBuilderCardSlot cardSlot;
     
+    private DeckBuilderCardSlot hiddenCards;
     private AvailableCards availableCards;
     private SelectedCards selectedCards;
     private Toggle doubleClickToggle;
     private GameObject cardObject;
 
     public static DeckBuilderCard CreateCard(
+        DeckBuilderCardSlot hiddenCards,
         AvailableCards availableCards,
         SelectedCards selectedCards,
         Toggle doubleClickToggle,
@@ -25,7 +27,7 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
         int? basePower,
         String faction) {
         
-        GameObject cardObject = Instantiate((GameObject)Resources.Load("DeckBuilderCard"), availableCards.transform);
+        GameObject cardObject = Instantiate((GameObject)Resources.Load("DeckBuilderCard"), hiddenCards.transform);
         DeckBuilderCard card = cardObject.GetComponent<DeckBuilderCard>();
         card.cardObject = cardObject;
         card.id = id;
@@ -33,9 +35,10 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
         card.attributes = new List<CardAttribute>(attributes);
         card.basePower = basePower;
         card.faction = faction;
+        card.hiddenCards = hiddenCards;
         card.availableCards = availableCards;
         card.selectedCards = selectedCards;
-        card.cardSlot = availableCards;
+        card.cardSlot = hiddenCards;
         card.doubleClickToggle = doubleClickToggle;
         return card;
     }
@@ -52,8 +55,10 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
         if (eventData.clickCount == RequiredClicks()) {
             if (cardSlot == availableCards) {
                 selectedCards.AddCard(this);
-            } else {
+            } else if (cardSlot == selectedCards) {
                 availableCards.AddCard(this);
+            } else {
+                Debug.LogError("Card selected from invalid DeckBuilderCardSlot");
             }
         }
     }

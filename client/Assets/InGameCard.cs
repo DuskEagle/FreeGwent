@@ -39,6 +39,23 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
         return card;
     }
 
+    public InGameCard Copy() {
+        return InGameCard.CreateCard(
+            cardRow,
+            id,
+            new List<CombatType>(combatTypes),
+            new List<CardAttribute>(attributes),
+            basePower,
+            currentPower,
+            faction
+        );
+    }
+
+    public void SetSize(int width, int height) {
+        this.GetComponent<LayoutElement>().preferredWidth = width;
+        this.GetComponent<LayoutElement>().preferredHeight = height;
+    }
+
     public void Start() {
         this.beginDragRow = this.transform.parent;
         this.hand = (HandRow)FindObjectsOfType(typeof(HandRow))[0];

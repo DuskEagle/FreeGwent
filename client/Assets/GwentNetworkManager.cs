@@ -14,6 +14,7 @@ public class GwentNetworkManager : MonoBehaviour {
     private static GwentNetworkManager gwn = null;
 
     [SerializeField] private Toggle doubleClickToggle;
+    [SerializeField] private HiddenCards hiddenCards;
     [SerializeField] private AvailableCards availableCards;
     [SerializeField] private SelectedCards selectedCards;
 
@@ -76,7 +77,12 @@ public class GwentNetworkManager : MonoBehaviour {
             Promise<IList<DeckBuilderCard>> pc = new Promise<IList<DeckBuilderCard>>();
             IList<DeckBuilderCard> cards = JsonConvert
                 .DeserializeObject<DeserializedCards>(str)
-                .ToDeckBuilderCards(availableCards, selectedCards, doubleClickToggle);
+                .ToDeckBuilderCards(
+                    hiddenCards,
+                    availableCards,
+                    selectedCards,
+                    doubleClickToggle
+                );
             pc.Resolve(cards);
             return pc;
         });
@@ -170,9 +176,11 @@ public class GwentNetworkManager : MonoBehaviour {
     }
 
     private void WaitForOurTurn() {
-        ReceiveGameState().Then(response => {
-            boardManager.UpdateBoard(response);
-            if (!response.ourTurn) {
+        ReceiveGameState().Then(gameState => {
+            boardManager.UpdateBoard(gameState);
+            if (gameState.ourLife == 0 || gameState.theirLife == 0) {
+                EndGame(gameState);
+            } else if (!gameState.ourTurn) {
                 WaitForOurTurn();
             }
         }).Catch(e =>
@@ -183,6 +191,17 @@ public class GwentNetworkManager : MonoBehaviour {
     public void Pass() {
         TurnEvent passEvent = TurnEvent.Pass();
         SendTurn(new List<TurnEvent> { passEvent });
+    }
+
+    private void EndGame(GameState gameState) {
+        GameEndScreen endScreen = (GameEndScreen)FindObjectOfType(typeof(GameEndScreen));
+        if (gameState.ourLife == 0 && gameState.theirLife == 0) {
+            endScreen.DisplayDraw();
+        } else if (gameState.ourLife == 0) {
+            endScreen.DisplayLoss();
+        } else {
+            endScreen.DisplayWin();
+        }
     }
 
 }

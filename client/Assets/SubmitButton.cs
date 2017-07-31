@@ -14,6 +14,7 @@ public class SubmitButton : MonoBehaviour, IPointerClickHandler {
 
     [SerializeField] private GwentNetworkManager gwn;
     [SerializeField] private SelectedCards selectedCards;
+    [SerializeField] private WaitingForOtherPlayer waitingScreen;
     private Vector3 originalScale;
     private Vector3 hiddenScale;
 
@@ -51,6 +52,7 @@ public class SubmitButton : MonoBehaviour, IPointerClickHandler {
     }
 
     public void OnPointerClick(PointerEventData eventData) {
+        waitingScreen.Display();
         gwn.SubmitDeck(selectedCards.GetCards());
     }
 }

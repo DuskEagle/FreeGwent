@@ -8,15 +8,18 @@ public class DeserializedCards {
     public List<DeserializedCard> cards;
 
     public IList<DeckBuilderCard> ToDeckBuilderCards(
+        HiddenCards hiddenCards,
         AvailableCards availableCards,
         SelectedCards selectedCards,
-        Toggle doubleClickToggle)
-    {
-
-        return this.cards.FindAll(dCard =>
-            dCard.faction == "nilfgaard" || dCard.faction == "neutral"
-        ).Select(dCard =>
-            dCard.ToDeckBuilderCard(availableCards, selectedCards, doubleClickToggle)
+        Toggle doubleClickToggle
+    ) {
+        return this.cards.Select(dCard =>
+            dCard.ToDeckBuilderCard(
+                hiddenCards,
+                availableCards,
+                selectedCards,
+                doubleClickToggle
+            )
         ).ToList();
     }
 

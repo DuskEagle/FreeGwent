@@ -35,11 +35,13 @@ public class DeserializedCard {
     }
 
     public DeckBuilderCard ToDeckBuilderCard(
+        HiddenCards hiddenCards,
         AvailableCards availableCards,
         SelectedCards selectedCards,
         Toggle doubleClickToggle) {
 
         return DeckBuilderCard.CreateCard(
+            hiddenCards,
             availableCards,
             selectedCards,
             doubleClickToggle,

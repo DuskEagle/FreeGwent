@@ -18,7 +18,7 @@ public class CardRow : MonoBehaviour, IDropHandler {
 
     private DiscardPile discardPile;
 
-    private void Start() {
+    protected virtual void Start() {
         this.discardPile = ((DiscardPile[])FindObjectsOfType(typeof(DiscardPile))).Where(d =>
           d.player == this.player
         ).First();
