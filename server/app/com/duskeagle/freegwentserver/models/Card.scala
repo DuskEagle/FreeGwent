@@ -2,6 +2,24 @@ package com.duskeagle.freegwentserver.models
 
 import play.api.libs.json.Json
 
+/**
+  *
+  * @param id
+  * @param basePower
+  * @param currentPower
+  * @param combatTypes
+  * @param attributes
+  * @param faction
+  * @param musterId
+  * @param tightBondId
+  * @param reviveRow The row to revive this card on, should a medic be played
+  *                  and this card chosen. While most units could just be
+  *                  revived onto the one row they fit on, in the case of
+  *                  agile units, they get revived onto the row they were
+  *                  last on. This will be set to None before the card is
+  *                  played, and won't be set to a defined value on non-combat
+  *                  cards.
+  */
 case class Card(
   id: String,
   basePower: Option[Int],
@@ -10,7 +28,8 @@ case class Card(
   attributes: List[CardAttribute],
   faction: Faction,
   musterId: Option[String],
-  tightBondId: Option[String]
+  tightBondId: Option[String],
+  reviveRow: Option[CombatType]
 ) {
 
   def isCommandersHorn: Boolean = {
@@ -35,6 +54,10 @@ case class Card(
 
   def hasHorn: Boolean = {
     attributes.contains(HornAttr)
+  }
+
+  def hasMedic: Boolean = {
+    attributes.contains(Medic)
   }
 
   def hasMuster: Boolean = {

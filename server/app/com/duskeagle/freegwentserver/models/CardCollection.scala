@@ -23,7 +23,8 @@ object CardCollection {
           attributes = cardConfig.attributes.map { CardAttribute(_) },
           faction = Faction(cardConfig.faction),
           musterId = cardConfig.musterId,
-          tightBondId = cardConfig.tightBondId
+          tightBondId = cardConfig.tightBondId,
+          reviveRow = None
         )
       }
     }

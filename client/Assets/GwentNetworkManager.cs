@@ -39,7 +39,9 @@ public class GwentNetworkManager : MonoBehaviour {
         if (useMock) {
             ReceiveGameState().Then(response => {
                 InGameSceneSetup(response);
-            });
+            }).Catch(e =>
+                Debug.LogError(e)
+            );
         }
     }
 
@@ -54,7 +56,9 @@ public class GwentNetworkManager : MonoBehaviour {
             Promise<String> ps = new Promise<String>();
             StartCoroutine(__RecvString__(ps, ws));
             return ps;
-        });
+        }).Catch(e =>
+            Debug.LogError(e)
+        );
     }
 
     private IEnumerator __RecvString__(Promise<String> ps, WebSocket ws) {
@@ -168,11 +172,13 @@ public class GwentNetworkManager : MonoBehaviour {
         }
     } 
 
-    public void SendTurn(IList<TurnEvent> events) {
-        boardManager.UpdateWhoseTurn(false);
-        TurnEvents turnEvents = new TurnEvents(events);
-        SendString(JsonConvert.SerializeObject(turnEvents));
-        WaitForOurTurn();
+    public void SendTurn(IPromise<IList<TurnEvent>> eventsPromise) {
+        eventsPromise.Then(events => {
+            boardManager.UpdateWhoseTurn(false);
+            TurnEvents turnEvents = new TurnEvents(events);
+            SendString(JsonConvert.SerializeObject(turnEvents));
+            WaitForOurTurn();
+        });
     }
 
     private void WaitForOurTurn() {
@@ -189,8 +195,9 @@ public class GwentNetworkManager : MonoBehaviour {
     }
 
     public void Pass() {
-        TurnEvent passEvent = TurnEvent.Pass();
-        SendTurn(new List<TurnEvent> { passEvent });
+        IPromise<IList<TurnEvent>> promise = Promise<IList<TurnEvent>>
+            .Resolved(new List<TurnEvent>());
+        SendTurn(promise);
     }
 
     private void EndGame(GameState gameState) {

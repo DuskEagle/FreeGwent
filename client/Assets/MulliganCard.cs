@@ -7,7 +7,6 @@ using FreeGwent;
 
 public class MulliganCard : Card, IPointerClickHandler {
 
-    private GameObject cardObject;
     private GwentNetworkManager gwn;
 
     public static MulliganCard CreateCard(
@@ -26,11 +25,12 @@ public class MulliganCard : Card, IPointerClickHandler {
         card.attributes = new List<CardAttribute>(attributes);
         card.basePower = basePower;
         card.faction = faction;
+        card.image = Resources.Load<Sprite>("CardImages/" + id);
         return card;
     }
 
     private void Start() {
-        this.cardObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardImages/" + this.id);
+        this.cardObject.GetComponent<Image>().sprite = this.image;
         gwn = (GwentNetworkManager)FindObjectOfType(typeof(GwentNetworkManager));
     }
 

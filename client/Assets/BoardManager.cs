@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using RSG;
 using UnityEngine;
+using FreeGwent;
 
 public class BoardManager : MonoBehaviour {
     [SerializeField] private CombatCardRow theirSiegeRow;
@@ -92,5 +95,39 @@ public class BoardManager : MonoBehaviour {
         } else {
             uiBlocker.Block();
         }
+    }
+
+    public IPromise<IList<TurnEvent>> PlayCardFromDiscardPile(DisplayCard displayCard) {
+        InGameCard card = ourDiscardPile.PopCardById(displayCard.id);
+        List<CombatType> eligibleCts = new List<CombatType> { CombatType.Melee, CombatType.Ranged, CombatType.Siege };
+        if (card.reviveRow == null) {
+            throw new AddCardException(
+                String.Format("{0} card is missing a revive row.", card.id)
+            );
+        } else if (!eligibleCts.Contains(card.reviveRow.Value)) {
+            throw new AddCardException(
+                String.Format("{0} card has an ineligble revive row.", card.id)
+            );
+        }
+        CombatType reviveRow = card.reviveRow.Value;
+        IPromise<IList<TurnEvent>> result;
+        if (card.IsSpy()) {
+            if (reviveRow == CombatType.Siege) {
+                result = theirSiegeRow.AddCard(card);
+            } else if (reviveRow == CombatType.Ranged) {
+                result = theirRangedRow.AddCard(card);
+            } else {
+                result = theirMeleeRow.AddCard(card);
+            }
+        } else {
+            if (reviveRow == CombatType.Melee) {
+                result = ourMeleeRow.AddCard(card);
+            } else if (reviveRow == CombatType.Ranged) {
+                result = ourRangedRow.AddCard(card);
+            } else {
+                result = ourSiegeRow.AddCard(card);
+            }
+        }
+        return result;
     }
 }

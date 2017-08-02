@@ -12,6 +12,7 @@ public class DeserializedCard {
     public int? basePower;
     public int? currentPower;
     public String faction;
+    public String reviveRow;
 
     private static String Capitalize(String s) {
         String capitalizedString = null;
@@ -22,9 +23,21 @@ public class DeserializedCard {
         return capitalizedString;
     }
 
+    private static CombatType? ParseCombatType(String unparsedCt) {
+        if (unparsedCt == null) {
+            return null;
+        } else {
+            return (CombatType)Enum.Parse(typeof(CombatType), Capitalize(unparsedCt));
+        }
+    }
+
     private static IList<CombatType> ParseCombatTypes(IList<String> unparsedCt) {
         return unparsedCt.Select(ct =>
-            (CombatType)Enum.Parse(typeof(CombatType), Capitalize(ct))
+            ParseCombatType(ct)
+        ).Where(ct =>
+            ct != null
+        ).Select(ct =>
+            (CombatType)ct
         ).ToList();
     }
 
@@ -70,6 +83,7 @@ public class DeserializedCard {
             ParseCardAttributes(this.attributes),
             basePower,
             currentPower,
-            faction);
+            faction,
+            ParseCombatType(reviveRow));
     }
 }

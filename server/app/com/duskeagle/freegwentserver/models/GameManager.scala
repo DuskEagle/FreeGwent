@@ -47,13 +47,18 @@ object GameManager {
       CardCollection.frost :+
       CardCollection.clearWeather :+
       CardCollection.getCardById("thaler") :+
-      CardCollection.getCardById("letho")
+      CardCollection.getCardById("letho") :+
+      CardCollection.getCardById("havekarhealer1") :+
+      CardCollection.getCardById("havekarhealer2") :+
+      CardCollection.getCardById("yennefer")
     val mockHand = mockCards :+
-      CardCollection.getCardById("arachas1") :+
       CardCollection.getCardById("arachas2")
     val mockDeck = mockCards :+
       CardCollection.getCardById("arachas3") :+
       CardCollection.getCardById("arachasbehemoth")
+    val discard = mockDeck.map { card =>
+      card.copy(reviveRow = card.combatTypes.headOption)
+    }
     val playerStates = (0 to 1).map { i =>
       val path = if (i == 0) {
         actor.path / "0"
@@ -65,7 +70,7 @@ object GameManager {
         actor = actor,
         hand = Hand(mockHand),
         deck = Deck(mockDeck),
-        discardPile = DiscardPile(mockDeck),
+        discardPile = DiscardPile(discard),
         life = 2,
         passed = false
       )

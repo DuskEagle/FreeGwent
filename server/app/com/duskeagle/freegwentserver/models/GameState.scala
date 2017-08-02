@@ -102,25 +102,20 @@ case class InGameState(
 
   def updateGameState(id: PlayerId, message: String): InGameState = {
     Json.fromJson[TurnEvents](Json.parse(message)) match {
-      case JsSuccess(e: TurnEvents, _) =>  updateGameState(id, e)
+      case JsSuccess(e: TurnEvents, _) =>  updateGameState(id, e.events)
       case e: JsError => sys.error(e.toString)
     }
   }
 
-  def updateGameState(playerId: PlayerId, events: TurnEvents): InGameState = {
+  def updateGameState(playerId: PlayerId, events: List[TurnEvent]): InGameState = {
     val player = if (getPlayer(playerId).id == player1.id) {
       player1
     } else {
       player2
     }
-    val newGame = events.events.headOption match {
-      case None => this
-      case Some(event) =>
-        if (event.pass) {
-          passMove(player, event)
-        } else {
-          nonPassMove(player, event)
-        }
+    val newGame = events.headOption match {
+      case None => passMove(player)
+      case Some(event) => nonPassMove(player, event, events.tail)
     }
 
     if (newGame.player1.passed && newGame.player2.passed) {
@@ -187,7 +182,7 @@ case class InGameState(
 
   }
 
-  private def passMove(player: InGamePlayerState, event: TurnEvent): InGameState = {
+  private def passMove(player: InGamePlayerState): InGameState = {
     val newPlayer = player.copy(passed = true)
     newPlayerAndBoardState(newPlayer, board)
   }
@@ -206,13 +201,37 @@ case class InGameState(
     }
   }
 
-  private def nonPassMove(player: InGamePlayerState, event: TurnEvent): InGameState = {
-    val card = CardCollection.getCardById(event.cardId)
-    val row = RowId.rowStringToId(event.row, player.id == player1.id)
-    var newPlayer = player.copy(
+  private def nonPassMove(
+    player: InGamePlayerState,
+    turn: TurnEvent,
+    restOfEvents: List[TurnEvent]): InGameState = {
+    val card = CardCollection.getCardById(turn.cardId)
+    val newPlayer = player.copy(
       hand = player.hand.remove(card) // throws if card not in hand
     )
-    var newBoard = board
+    resolveCardEffects(newPlayer, board, turn, restOfEvents)
+  }
+
+  private def resolveCardEffects(
+    player: InGamePlayerState,
+    _board: BoardState,
+    turn: TurnEvent,
+    restOfEvents: List[TurnEvent]): InGameState = {
+    val card = CardCollection.getCardById(turn.cardId)
+    val row = RowId.rowStringToId(turn.row, player.id == player1.id)
+    var newBoard = _board
+    var newPlayer = player
+    if (card.hasMedic) {
+      restOfEvents.headOption match {
+        case None =>
+        case Some(ev) =>
+          val revivedCard = Card
+          newPlayer = newPlayer.copy(discardPile = newPlayer.discardPile.remove(ev.cardId))
+          val newGameState = resolveCardEffects(newPlayer, newBoard, ev, restOfEvents.tail)
+          newBoard = newGameState.board
+          newPlayer = if (player.id == newGameState.player1.id) newGameState.player1 else newGameState.player2
+      }
+    }
     if (card.hasSpy) {
       val (drawnCards, newDeck) = newPlayer.deck.draw(2)
       newPlayer = newPlayer.copy(

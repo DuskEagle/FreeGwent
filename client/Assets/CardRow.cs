@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using RSG;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using FreeGwent;
@@ -13,6 +13,8 @@ public class CardRow : MonoBehaviour, IDropHandler {
     public String rowName;
 
     private GwentNetworkManager gwn;
+    private static Promise<IList<TurnEvent>> medicPromise = new Promise<IList<TurnEvent>>();
+    private static List<TurnEvent> medicList = new List<TurnEvent>();
 
     protected List<InGameCard> cards = new List<InGameCard>();
 
@@ -32,7 +34,9 @@ public class CardRow : MonoBehaviour, IDropHandler {
 	public void OnDrop(PointerEventData eventData) {
         InGameCard card = eventData.pointerDrag.GetComponent<InGameCard>();
         try {
-            this.AddCard(card);
+            medicPromise = new Promise<IList<TurnEvent>>();
+            medicList = new List<TurnEvent>();
+            gwn.SendTurn(this.AddCard(card));
         } catch (AddCardException) {}
     }
 
@@ -61,14 +65,24 @@ public class CardRow : MonoBehaviour, IDropHandler {
 
     /* Attempt to add card to row. If the card can't be added, throws
      * an exception. Use skipCheck = true to always add the card */
-    virtual public void AddCard(InGameCard card, Boolean skipCheck = false) {
+    virtual public IPromise<IList<TurnEvent>> AddCard(InGameCard card, Boolean skipCheck = false) {
         if (skipCheck || this.CanAddCard(card)) {
             TurnEvent turnEvent = card.SetCardRow(this);
             this.cards.Add(card);
             this.UpdateCardOrder();
             this.UpdateScore();
-            gwn.SendTurn(new List<TurnEvent> { turnEvent });
-            return;
+            if (card.IsMedic()) {
+                medicList.Add(turnEvent);
+                discardPile.ShowCardsForRevival().Then(teList => {
+                    medicList.AddRange(teList);
+                    medicPromise.Resolve(medicList);
+                }).Catch(e =>
+                    Debug.LogError(e)
+                );
+                return medicPromise;
+            } else {
+                return Promise<IList<TurnEvent>>.Resolved(new List<TurnEvent>{ turnEvent });
+            }
         }
         throw new AddCardException(String.Format("Attempt to add card {0} to invalid row.", card.id));
     }
@@ -80,22 +94,26 @@ public class CardRow : MonoBehaviour, IDropHandler {
         Populate(cardsToAdd.Select(c => c.ToInGameCard(this)));
     }
 
+    public void Populate(IEnumerable<DisplayCard> cardsToAdd) {
+        Populate(cardsToAdd.Select(c => (InGameCard)c));
+    }
+
     /* Populate the cards in CardRow with cardsToAdd, replacing
      * any cards that used to be here.
      */
-    public void Populate(IEnumerable<InGameCard> cardsToAdd) {
+    public virtual void Populate(IEnumerable<InGameCard> cardsToAdd) {
         cards.ForEach(card => {
             Destroy(card.gameObject);
         });
         cards = new List<InGameCard>(cardsToAdd);
         cards.ForEach(card => {
-            card.transform.SetParent(this.transform);
+            card.SetCardRow(this);
         });
         this.UpdateCardOrder();
         this.UpdateScore();
     }
 
-    public void RemoveCard(InGameCard card) {
+    virtual public void RemoveCard(InGameCard card) {
         this.cards.Remove(card);
         this.UpdateCardOrder();
         this.UpdateScore();

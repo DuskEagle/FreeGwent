@@ -4,8 +4,7 @@ import play.api.libs.json.Json
 
 case class TurnEvent(
   cardId: String,
-  row: String,
-  pass: Boolean
+  row: String
 )
 
 object TurnEvent {

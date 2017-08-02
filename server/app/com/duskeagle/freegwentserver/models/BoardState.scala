@@ -66,12 +66,18 @@ case class BoardState(
 
   private def addCombatCard(card: Card, row: RowId): BoardState = {
     row match {
-      case _: p1s => copy(siege1 = siege1.copy(cards = siege1.cards :+ card ))
-      case _: p1r => copy(ranged1 = ranged1.copy(cards = ranged1.cards :+ card ))
-      case _: p1m => copy(melee1 = melee1.copy(cards = melee1.cards :+ card ))
-      case _: p2m => copy(melee2 = melee2.copy(cards = melee2.cards :+ card ))
-      case _: p2r => copy(ranged2 = ranged2.copy(cards = ranged2.cards :+ card ))
-      case _: p2s => copy(siege2 = siege2.copy(cards = siege2.cards :+ card ))
+      case _: p1s => copy(siege1 = siege1.copy(
+        cards = siege1.cards :+ card.copy(reviveRow = Some(Siege))))
+      case _: p1r => copy(ranged1 = ranged1.copy(
+        cards = ranged1.cards :+ card.copy(reviveRow = Some(Ranged))))
+      case _: p1m => copy(melee1 = melee1.copy(
+        cards = melee1.cards :+ card.copy(reviveRow = Some(Melee))))
+      case _: p2m => copy(melee2 = melee2.copy(
+        cards = melee2.cards :+ card.copy(reviveRow = Some(Melee))))
+      case _: p2r => copy(ranged2 = ranged2.copy(
+        cards = ranged2.cards :+ card.copy(reviveRow = Some(Ranged))))
+      case _: p2s => copy(siege2 = siege2.copy(
+        cards = siege2.cards :+ card.copy(reviveRow = Some(Siege))))
       case _: wea =>
         throw IllegalMoveException(s"Attempt to add card ${card.id} to weather row")
     }

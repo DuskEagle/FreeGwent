@@ -14,7 +14,6 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
     private AvailableCards availableCards;
     private SelectedCards selectedCards;
     private Toggle doubleClickToggle;
-    private GameObject cardObject;
 
     public static DeckBuilderCard CreateCard(
         DeckBuilderCardSlot hiddenCards,
@@ -40,11 +39,12 @@ public class DeckBuilderCard : Card, IPointerClickHandler {
         card.selectedCards = selectedCards;
         card.cardSlot = hiddenCards;
         card.doubleClickToggle = doubleClickToggle;
+        card.image = Resources.Load<Sprite>("CardImages/" + id);
         return card;
     }
 
     private void Start() {
-        this.cardObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardImages/" + this.id);
+        this.cardObject.GetComponent<Image>().sprite = this.image;
     }
 
     private int RequiredClicks() {

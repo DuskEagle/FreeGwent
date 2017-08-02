@@ -9,9 +9,10 @@ using FreeGwent;
 [Serializable]
 public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
+    public CombatType? reviveRow;
+
     private Vector2 mouseOffset;
     private GameObject placeholder = null;
-    protected GameObject cardObject;
 
     // Figure out a way to track beginDragRow using cardRow or hand
     private Transform beginDragRow;
@@ -25,7 +26,8 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
         IList<CardAttribute> attributes,
         int? basePower,
         int? currentPower,
-        String faction) {
+        String faction,
+        CombatType? reviveRow) {
         
         GameObject cardObject = Instantiate((GameObject)Resources.Load("InGameCard"), cardRow.transform);
         InGameCard card = cardObject.GetComponent<InGameCard>();
@@ -36,6 +38,9 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
         card.basePower = basePower;
         card.currentPower = currentPower;
         card.faction = faction;
+        card.reviveRow = reviveRow;
+        card.cardRow = cardRow;
+        card.image = Resources.Load<Sprite>("CardImages/" + id);
         return card;
     }
 
@@ -47,7 +52,8 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
             new List<CardAttribute>(attributes),
             basePower,
             currentPower,
-            faction
+            faction,
+            reviveRow
         );
     }
 
@@ -59,8 +65,7 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
     public void Start() {
         this.beginDragRow = this.transform.parent;
         this.hand = (HandRow)FindObjectsOfType(typeof(HandRow))[0];
-        this.cardRow = hand;
-        this.cardObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("CardImages/" + this.id);
+        this.cardObject.GetComponent<Image>().sprite = this.image;
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -103,11 +108,7 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
         }
         this.beginDragRow = row.transform;
         this.transform.SetParent(beginDragRow);
-        //do we need this?
-        this.transform.position = beginDragRow.position;
-        //do we need this?
         this.cardRow = row;
-        
         return new TurnEvent(id, cardRow.rowName);
     }
 
@@ -126,7 +127,11 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
         return attributes.Contains(CardAttribute.Spy);
     }
 
-    virtual protected void Battlecry() {
-        return;
+    public Boolean IsMedic() {
+        return attributes.Contains(CardAttribute.Medic);
+    }
+
+    public Boolean IsHero() {
+        return attributes.Contains(CardAttribute.Hero);
     }
 }

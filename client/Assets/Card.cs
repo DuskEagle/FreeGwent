@@ -11,6 +11,9 @@ abstract public class Card : MonoBehaviour {
     public int? basePower;
     public int? currentPower;
     public String faction;
+    public Sprite image;
+
+    protected GameObject cardObject;
 
     private static List<CombatType> unitTypes = new List<CombatType> { CombatType.Melee, CombatType.Ranged, CombatType.Siege };
 
