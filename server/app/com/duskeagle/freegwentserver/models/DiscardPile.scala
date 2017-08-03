@@ -4,6 +4,9 @@ case class DiscardPile(
   cards: List[Card]
 ) {
   def contains(card: Card): Boolean = cards.contains(card)
+  def add(cardToAdd: Card): DiscardPile = {
+    copy(cards = cards :+ cardToAdd)
+  }
   def add(cardsToAdd: List[Card]): DiscardPile = {
     copy(cards = cards ++ cardsToAdd)
   }

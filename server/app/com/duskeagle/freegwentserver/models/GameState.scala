@@ -108,10 +108,10 @@ case class InGameState(
   }
 
   def updateGameState(playerId: PlayerId, events: List[TurnEvent]): InGameState = {
-    val player = if (getPlayer(playerId).id == player1.id) {
-      player1
+    val (player, otherPlayer) = if (getPlayer(playerId).id == player1.id) {
+      (player1, player2)
     } else {
-      player2
+      (player2, player1)
     }
     val newGame = events.headOption match {
       case None => passMove(player)
@@ -126,7 +126,6 @@ case class InGameState(
         player1sTurn
       } else {
         if (newGame.player1.passed && newGame.player2.passed) {
-          println("Round end")
           true
         } else if (newGame.player1.passed) {
           false
@@ -244,8 +243,47 @@ case class InGameState(
       newPlayer = musterResult._1
       newBoard = musterResult._2
     }
-    newBoard = newBoard.addCard(card, row)
-    newPlayerAndBoardState(newPlayer, newBoard)
+
+    if (card.isScorch) {
+      newPlayer = newPlayer.copy(
+        discardPile = newPlayer.discardPile.add(card)
+      )
+      newPlayerAndBoardState(newPlayer, newBoard).scorch
+    } else {
+      // Don't add the Scorch card to the board, it goes directly to Discard pile
+      newBoard = newBoard.addCard(card, row)
+      newPlayerAndBoardState(newPlayer, newBoard)
+    }
+  }
+
+  private def scorch: InGameState = {
+    val p1Cards = (board.melee1.cards ++ board.ranged1.cards ++ board.siege1.cards).filter { card =>
+      !card.hasHero
+    }
+    val p2Cards = (board.melee2.cards ++ board.ranged2.cards ++ board.siege2.cards).filter { card =>
+      !card.hasHero
+    }
+    val allCards = p1Cards ++ p2Cards
+    val highestPower = allCards.map { card =>
+      card.currentPower.getOrElse(-1)
+    }.reduceOption(_ max _)
+    highestPower match {
+      case None => this
+      case Some(power) =>
+        val highestPowerFunc = (c: Card) => c.currentPower == highestPower
+        val newBoard = board.applyToAllRows((cr: CardRow) => cr.filter(!highestPowerFunc(_)))
+        val newPlayer1 = player1.copy(
+          discardPile = player1.discardPile.add(p1Cards.filter(highestPowerFunc))
+        )
+        val newPlayer2 = player2.copy(
+          discardPile = player2.discardPile.add(p2Cards.filter(highestPowerFunc))
+        )
+        copy(
+          player1 = newPlayer1,
+          player2 = newPlayer2,
+          board = newBoard
+        )
+    }
   }
 
   private def muster(

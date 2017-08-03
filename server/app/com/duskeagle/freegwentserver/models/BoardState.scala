@@ -34,6 +34,17 @@ case class BoardState(
     tempState.updateCardPower
   }
 
+  def applyToAllRows(f: CardRow => CardRow): BoardState = {
+    copy(
+      siege1 = f(siege1),
+      ranged1 = f(ranged1),
+      melee1 = f(melee1),
+      melee2 = f(melee2),
+      ranged2 = f(ranged2),
+      siege2 = f(siege2)
+    )
+  }
+
   private def addHornCard(card: Card, row: RowId): BoardState = {
     row match {
       case _: p1s => copy(siege1 = addHornToRow(card, siege1))
@@ -42,8 +53,8 @@ case class BoardState(
       case _: p2m => copy(melee2 = addHornToRow(card, melee2))
       case _: p2r => copy(ranged2 = addHornToRow(card, ranged2))
       case _: p2s => copy(siege2 = addHornToRow(card, siege2))
-      case _: wea =>
-        throw IllegalMoveException(s"Attempt to add card ${card.id} to weather row")
+      case _ =>
+        throw IllegalMoveException(s"Attempt to add card ${card.id} to illegal row $row")
     }
   }
 
@@ -78,8 +89,8 @@ case class BoardState(
         cards = ranged2.cards :+ card.copy(reviveRow = Some(Ranged))))
       case _: p2s => copy(siege2 = siege2.copy(
         cards = siege2.cards :+ card.copy(reviveRow = Some(Siege))))
-      case _: wea =>
-        throw IllegalMoveException(s"Attempt to add card ${card.id} to weather row")
+      case _ =>
+        throw IllegalMoveException(s"Attempt to add card ${card.id} to illegal row $row")
     }
   }
 

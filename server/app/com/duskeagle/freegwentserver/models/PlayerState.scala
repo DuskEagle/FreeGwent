@@ -113,7 +113,7 @@ case class MulliganPlayerState(
     actor = actor,
     hand = hand,
     deck = deck,
-    discardPile = DiscardPile(cards = Nil),
+    discardPile = DiscardPile(Nil),
     life = 2,
     passed = false
   )

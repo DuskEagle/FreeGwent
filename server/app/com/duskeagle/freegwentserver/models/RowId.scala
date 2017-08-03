@@ -9,6 +9,7 @@ case class p1r() extends RowId
 case class p2r() extends RowId
 case class p1s() extends RowId
 case class p2s() extends RowId
+case class han() extends RowId
 case class wea() extends RowId
 
 object RowId {
@@ -19,6 +20,7 @@ object RowId {
   val ourMeleeString = "Our Melee"
   val ourRangedString = "Our Ranged"
   val ourSiegeString = "Our Siege"
+  val ourHandString = "Our Hand"
   val weather = "Weather"
 
   /*
@@ -39,6 +41,7 @@ object RowId {
       case (`ourRangedString`, false) => p2r()
       case (`ourSiegeString`, true) => p1s()
       case (`ourSiegeString`, false) => p2s()
+      case (`ourHandString`, _) => han()
       case (`weather`, _) => wea()
       case (s: String, _) => sys.error(s"Unrecognized row string: $s")
     }

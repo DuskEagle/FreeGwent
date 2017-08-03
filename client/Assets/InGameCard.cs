@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using RSG;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -97,8 +97,17 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData) {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        this.transform.SetParent(beginDragRow);
-        //this.cardRow.UpdateCardOrder(); // Shouldn't be necessary; test this before final removal.
+        CardRow cr = eventData.pointerDrag.GetComponent<CardRow>();
+        if (IsScorch() && (cr == null || cr != this.hand)) {
+            this.hand.Scorch(this);
+        } else {
+            this.transform.SetParent(beginDragRow);
+            // Need to call UpdateCardOrder here to handle the case where we didn't
+            // add the card to any row, so it just got placed back on its original
+            // row. Without this, when we place the card back onto the row, it
+            // would be placed at the end of the row, not where it formerly was.
+            this.cardRow.UpdateCardOrder();
+        }
         Destroy(placeholder);
     }
 

@@ -34,4 +34,8 @@ abstract public class Card : MonoBehaviour {
     public Boolean IsSpecialType() {
         return !IsUnitType() && !IsLeaderType();
     }
+
+    public Boolean IsScorch() {
+        return combatTypes.Contains(CombatType.Scorch);
+    }
 }

@@ -12,7 +12,7 @@ public class CardRow : MonoBehaviour, IDropHandler {
     public Player player;
     public String rowName;
 
-    private GwentNetworkManager gwn;
+    protected GwentNetworkManager gwn;
     private static Promise<IList<TurnEvent>> medicPromise = new Promise<IList<TurnEvent>>();
     private static List<TurnEvent> medicList = new List<TurnEvent>();
 
@@ -31,7 +31,7 @@ public class CardRow : MonoBehaviour, IDropHandler {
         return cards.AsReadOnly();
     }
 
-	public void OnDrop(PointerEventData eventData) {
+	virtual public void OnDrop(PointerEventData eventData) {
         InGameCard card = eventData.pointerDrag.GetComponent<InGameCard>();
         try {
             medicPromise = new Promise<IList<TurnEvent>>();

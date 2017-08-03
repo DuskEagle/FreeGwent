@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using FreeGwent;
 
 public class HandRow : CardRow {
@@ -11,6 +11,10 @@ public class HandRow : CardRow {
 
     public int GetHandSize() {
         return cards.Count;
+    }
+
+    public void Scorch(InGameCard card) {
+        gwn.SendTurn(AddCard(card, true));
     }
 
 }

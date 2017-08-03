@@ -17,8 +17,12 @@ public class DiscardPile : CardRow, IPointerClickHandler {
     private void UpdateImage() {
         if (cards.Count > 0) {
             this.GetComponent<Image>().sprite = cards[0].image;
+            // Make image opaque
+            this.GetComponent<Image>().color = new Color32(0xff, 0xff, 0xff, 0xff);
         } else {
             this.GetComponent<Image>().sprite = null;
+            // Make completely transparent
+            this.GetComponent<Image>().color = new Color32(0xff, 0xff, 0xff, 0x00);
         }
     }
 

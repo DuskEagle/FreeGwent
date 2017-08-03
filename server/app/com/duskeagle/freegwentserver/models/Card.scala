@@ -36,6 +36,10 @@ case class Card(
     combatTypes.contains(HornType)
   }
 
+  def isScorch: Boolean = {
+    combatTypes.contains(Scorch)
+  }
+
   def isWeather: Boolean = {
     combatTypes.contains(Weather)
   }

@@ -119,6 +119,10 @@ case class CardRow(
     }
   }
 
+  def filter(f: Card => Boolean): CardRow = {
+    copy(cards = cards.filter(f))
+  }
+
 }
 
 object CardRow {
