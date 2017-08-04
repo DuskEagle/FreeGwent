@@ -1,5 +1,7 @@
 # FreeGwent
 
+![Screenshot of FreeGwent](resources/screenshot1.png)
+
 A Work-In-Progress. This is a port of the game "Gwent" from the Witcher 3.
 If you enjoyed that game, you may enjoy the much better standalone version
 from the same company: (https://www.playgwent.com/en).
