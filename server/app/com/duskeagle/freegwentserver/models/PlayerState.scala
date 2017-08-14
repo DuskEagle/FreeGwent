@@ -10,6 +10,7 @@ import scala.util.Random
 sealed trait PlayerState {
   val id: PlayerId
   val actor: ActorRef
+  val faction: Faction
   val hand: Hand
   val deck: Deck
 }
@@ -19,6 +20,7 @@ case class WaitingForMulligan(
   actor: ActorRef
 ) extends PlayerState {
 
+  val faction = Neutral
   val hand = Hand(Nil)
   val deck = Deck(Nil)
 
@@ -39,17 +41,22 @@ case class WaitingForMulligan(
     /* TODO: Verify that deck.cards is a subset of CardCollection.cards,
      * and that deck has correct amount of unit, special, and leader types.
      */
-    val hand = Random.shuffle(deck.cards).take(math.min(10, deck.cards.length))
-    val deckBuffer = deck.cards.to[ListBuffer]
+    val leader = deck.cards.find { _.isLeader}
+      .getOrElse(sys.error("No leader in deck!"))
+    val nonLeaderCards = deck.cards.filter { !_.isLeader }
+    val hand = Random.shuffle(nonLeaderCards).take(math.min(10, nonLeaderCards.length))
+    val deckBuffer = nonLeaderCards.to[ListBuffer]
     hand.foreach { card =>
-      deckBuffer -= card;
+      deckBuffer -= card
     }
     val remainingDeck = deckBuffer.toList
     WaitingForOtherPlayer(
       id = id,
       actor = actor,
+      faction = leader.faction,
       hand = Hand(hand),
-      deck = Deck(remainingDeck)
+      deck = Deck(remainingDeck),
+      leader = leader
     )
   }
 }
@@ -57,15 +64,19 @@ case class WaitingForMulligan(
 case class WaitingForOtherPlayer(
   id: PlayerId,
   actor: ActorRef,
+  faction: Faction,
   hand: Hand,
-  deck: Deck
+  deck: Deck,
+  leader: Card
 ) extends PlayerState {
   def playerFound(): MulliganPlayerState = {
     MulliganPlayerState(
       id,
       actor,
+      faction,
       hand,
       deck,
+      leader,
       cardsMulliganed = 0
     )
   }
@@ -74,17 +85,12 @@ case class WaitingForOtherPlayer(
 case class MulliganPlayerState(
   id: PlayerId,
   actor: ActorRef,
+  faction: Faction,
   hand: Hand,
   deck: Deck,
+  leader: Card,
   cardsMulliganed: Int
 ) extends PlayerState {
-
-  def mulligan(str: String): MulliganPlayerState = {
-    Json.fromJson[MulliganJson](Json.parse(str)) match {
-      case JsSuccess(m: MulliganJson, _) => mulligan(m.card)
-      case e: JsError => sys.error(e.toString)
-    }
-  }
 
   def mulligan(cardJson: CardJson): MulliganPlayerState = {
     val card = CardCollection.getCardById(cardJson.id)
@@ -101,29 +107,41 @@ case class MulliganPlayerState(
         val newDeck = deck.copy(
           cards = card :: deck.cards.diff(List(newCard))
         )
-        MulliganPlayerState(id, actor, newHand, newDeck, cardsMulliganed + 1)
+        copy(
+          hand = newHand,
+          deck = newDeck,
+          cardsMulliganed = cardsMulliganed + 1
+        )
       } else {
-        MulliganPlayerState(id, actor, hand, deck, cardsMulliganed + 1)
+        copy(cardsMulliganed = cardsMulliganed + 1)
       }
     }
   }
 
-  def endMulliganPhase(): InGamePlayerState = InGamePlayerState(
-    id = id,
-    actor = actor,
-    hand = hand,
-    deck = deck,
-    discardPile = DiscardPile(Nil),
-    life = 2,
-    passed = false
-  )
+  def endMulliganPhase(): InGamePlayerState = {
+    InGamePlayerState(
+      id = id,
+      actor = actor,
+      faction = faction,
+      hand = hand,
+      deck = deck,
+      leader = leader,
+      discardPile = DiscardPile(Nil),
+      leaderEnabled = true,
+      life = 2,
+      passed = false
+    )
+  }
 }
 
 case class InGamePlayerState(
   id: PlayerId,
   actor: ActorRef,
+  faction: Faction,
   hand: Hand,
   deck: Deck,
+  leader: Card,
+  leaderEnabled: Boolean,
   discardPile: DiscardPile,
   life: Int,
   passed: Boolean
@@ -131,6 +149,27 @@ case class InGamePlayerState(
 
   def loseALife: InGamePlayerState = {
     copy(life = life - 1)
+  }
+
+  def northernRealmsFactionAbility: InGamePlayerState = {
+    if (faction == NorthernRealms) {
+      val (newCards, newDeck) = deck.draw(1)
+      copy(hand = hand.add(newCards), deck = newDeck)
+    } else {
+      this
+    }
+  }
+
+  def roundEndClearBoard(cardsOnOurBoard: List[Card]): (Option[Card], InGamePlayerState) = {
+    val cardToRetain = if (faction == Monsters) {
+      Random.shuffle(cardsOnOurBoard).take(1).headOption
+    } else {
+      None
+    }
+    (cardToRetain, copy(
+      discardPile = discardPile.add(cardsOnOurBoard.diff(cardToRetain.toList)),
+      passed = false
+    ))
   }
 
 }

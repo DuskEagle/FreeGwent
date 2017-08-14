@@ -22,7 +22,6 @@ object GameManager {
           )
           wActor.tell(playerFound, actor)
           actor.tell(playerFound, actor)
-          // Comment out for testing
           waitingActor = None
           waitingPlayerState = None
           waitingGame = None
@@ -46,7 +45,8 @@ object GameManager {
     }.take(2) :+ CardCollection.getCardById("horn") :+
       CardCollection.frost :+
       CardCollection.clearWeather :+
-      CardCollection.getCardById("scorch")
+      CardCollection.getCardById("scorch") :+
+      CardCollection.getCardById("villentretenmerth")
     val mockHand = mockCards :+
       CardCollection.getCardById("arachas2")
     val mockDeck = mockCards :+
@@ -61,8 +61,11 @@ object GameManager {
       InGamePlayerState(
         id = PlayerId(path),
         actor = actor,
+        faction = Nilfgaard,
         hand = Hand(mockHand),
         deck = Deck(mockDeck),
+        leader = CardCollection.getCardById("emhyrempororofnilfgaard"),
+        leaderEnabled = true,
         discardPile = DiscardPile(Nil),
         life = 2,
         passed = false

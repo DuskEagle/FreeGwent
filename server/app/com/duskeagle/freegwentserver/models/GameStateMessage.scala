@@ -5,6 +5,10 @@ import play.api.libs.json.Json
 case class GameStateMessage(
   board: BoardState,
   hand: List[Card],
+  ourLeader: Card,
+  ourLeaderEnabled: Boolean,
+  theirLeader: Card,
+  theirLeaderEnabled: Boolean,
   ourDiscardPile: List[Card],
   theirDiscardPile: List[Card],
   ourLife: Int,

@@ -36,6 +36,10 @@ case class Card(
     combatTypes.contains(HornType)
   }
 
+  def isLeader: Boolean = {
+    combatTypes.contains(Leader)
+  }
+
   def isScorch: Boolean = {
     combatTypes.contains(Scorch)
   }
@@ -46,6 +50,18 @@ case class Card(
 
   def hasHero: Boolean = {
     attributes.contains(Hero)
+  }
+
+  def hasScorchMelee: Boolean = {
+    attributes.contains(ScorchMelee)
+  }
+
+  def hasScorchRanged: Boolean = {
+    attributes.contains(ScorchRanged)
+  }
+
+  def hasScorchSiege: Boolean = {
+    attributes.contains(ScorchSiege)
   }
 
   def hasSpy: Boolean = {

@@ -22,6 +22,9 @@ public class BoardManager : MonoBehaviour {
 
     [SerializeField] private WeatherRow weatherRow;
 
+    [SerializeField] private CardRow theirLeader;
+    [SerializeField] private CardRow ourLeader;
+
     [SerializeField] private DiscardPile theirDiscardPile;
     [SerializeField] private DiscardPile ourDiscardPile;
 

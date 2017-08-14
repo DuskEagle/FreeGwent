@@ -15,9 +15,9 @@ class GameStateWrapper() {
               // This is a bad way to do it
               Some(Json.toJson[Hand](gameState.getPlayer(id).hand).toString)
             case gameState: MulliganGameState =>
-              val newState = gameState.mulligan(id, message)
+              val newState = gameState.updateGameState(id, message)
               stateOpt = Some(newState)
-              Some(Json.toJson[Hand](newState.getPlayer(id).hand).toString)
+              Some(Json.toJson[MulliganResponse](MulliganResponse.getResponseFromGameState(newState, id)).toString)
             case gameState: InGameState if message == "game start" =>
               Some(gameState.gameStateMessageString(id))
             case gameState: InGameState =>
@@ -37,7 +37,7 @@ class GameStateWrapper() {
   }
 
   def startGame(player1: MulliganPlayerState, player2: MulliganPlayerState): Unit = {
-    stateOpt = Some(MulliganGameState(player1, player2))
+    stateOpt = Some(MulliganGameState(player1, player2, None))
   }
 
   def startMockGame(inGameState: InGameState): Unit = {

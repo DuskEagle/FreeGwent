@@ -104,6 +104,11 @@ case class BoardState(
       siege2 = siege2.updateCardPower(weather.contains(CardCollection.rain))
     )
   }
+
+  def clearBoard(retainCards: List[Card] = Nil): BoardState = {
+    val clearRow = (cr: CardRow) => cr.filter((card: Card) => retainCards.contains(card))
+    applyToAllRows(clearRow).updateCardPower
+  }
 }
 
 object BoardState {

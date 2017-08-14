@@ -20,6 +20,7 @@ public class GwentNetworkManager : MonoBehaviour {
 
     private MulliganRow mulliganRow = null;
     private MulliganCountText mulliganCountText;
+    private WhoGoesFirstScreen whoGoesFirstScreen;
     private Promise<WebSocket> ws = new Promise<WebSocket>();
     private BoardManager boardManager = null;
 
@@ -102,12 +103,12 @@ public class GwentNetworkManager : MonoBehaviour {
         });
     }
 
-    private IPromise<DeserializedCards> ReceiveMulliganHand() {
+    private IPromise<MulliganResponse> ReceiveMulliganHand() {
         return RecvString().Then(str => {
-            Promise<DeserializedCards> pc = new Promise<DeserializedCards>();
-            DeserializedCards receivedCards = JsonConvert
-                .DeserializeObject<DeserializedCards>(str);
-            pc.Resolve(receivedCards);
+            Promise<MulliganResponse> pc = new Promise<MulliganResponse>();
+            MulliganResponse response = JsonConvert
+                .DeserializeObject<MulliganResponse>(str);
+            pc.Resolve(response);
             return pc;
         });
     }
@@ -125,11 +126,12 @@ public class GwentNetworkManager : MonoBehaviour {
         );
     }
 
-    private IEnumerator<System.Object> StartMulliganScene(DeserializedCards hand) {
+    private IEnumerator<System.Object> StartMulliganScene(MulliganResponse hand) {
         SceneManager.LoadScene("Mulligan");
         // After a LoadScene, we must wait one frame before calling FindObjectsOfType
         yield return null;
         mulliganRow = (MulliganRow)FindObjectOfType(typeof(MulliganRow));
+        whoGoesFirstScreen = (WhoGoesFirstScreen)FindObjectOfType(typeof(WhoGoesFirstScreen));
         mulliganCountText = (MulliganCountText)FindObjectOfType(typeof(MulliganCountText));
         mulliganRow.Populate(hand.cards.Select(c => c.ToMulliganCard(mulliganRow)));
     }
@@ -144,20 +146,41 @@ public class GwentNetworkManager : MonoBehaviour {
             new SerializedCard(mulliganCard.id));
         SendString(JsonConvert.SerializeObject(message));
         ReceiveMulliganHand().Then(hand => {
-            mulliganRow.Populate(hand.ToMulliganCards(mulliganRow));
+            mulliganRow.Populate(hand.cards.Select(c => c.ToMulliganCard(mulliganRow)));
             mulliganCountText.Increment();
             if (mulliganCountText.Count() == 2) {
-                ReceiveGameState().Then(response => {
-                    StartCoroutine(StartInGameScene(response));
-                });
+                if (hand.selectWhoGoesFirst) {
+                    whoGoesFirstScreen.Show();
+                } else {
+                    WaitForStartGameMessage();
+                }
             } else {
                 //mulliganRow.BlockRaycasts(false);
             }
         });
     }
 
+    private void WaitForStartGameMessage() {
+        ReceiveGameState().Then(response => {
+            StartCoroutine(StartInGameScene(response));
+        });
+    }
+
+    public void SendWhoGoesFirst(Boolean weGoFirst) {
+        String s;
+        if (weGoFirst) {
+            s = "first";
+        } else {
+            s = "second";
+        }
+        TurnEvents ev = new TurnEvents(new List<TurnEvent>{ new TurnEvent(s, "")});
+        SendString(JsonConvert.SerializeObject(ev));
+        ReceiveMulliganHand().Then(hand =>
+            WaitForStartGameMessage()
+        );
+    }
+
     private IEnumerator<System.Object> StartInGameScene(GameState response) {
-        Debug.Log("In Game Scene");
         SceneManager.LoadScene("InGame");
         // Must wait one frame
         yield return null;
@@ -170,7 +193,7 @@ public class GwentNetworkManager : MonoBehaviour {
         if (!response.ourTurn) {
             WaitForOurTurn();
         }
-    } 
+    }
 
     public void SendTurn(IPromise<IList<TurnEvent>> eventsPromise) {
         eventsPromise.Then(events => {
