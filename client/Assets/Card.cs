@@ -18,7 +18,7 @@ abstract public class Card : MonoBehaviour {
     private static List<CombatType> unitTypes = new List<CombatType> { CombatType.Melee, CombatType.Ranged, CombatType.Siege };
 
     public Boolean IsUnitType() {
-        if (id != Decoy.decoyId &&
+        if (!HasDecoy() &&
             // combatTypes is subset of unitTypes
             !combatTypes.Except(Card.unitTypes).Any()) {
             return true;
@@ -37,5 +37,9 @@ abstract public class Card : MonoBehaviour {
 
     public Boolean IsScorch() {
         return combatTypes.Contains(CombatType.Scorch);
+    }
+
+    public Boolean HasDecoy() {
+        return attributes.Contains(CardAttribute.Decoy);
     }
 }

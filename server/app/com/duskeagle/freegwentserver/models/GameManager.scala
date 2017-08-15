@@ -46,7 +46,8 @@ object GameManager {
       CardCollection.frost :+
       CardCollection.clearWeather :+
       CardCollection.getCardById("scorch") :+
-      CardCollection.getCardById("villentretenmerth")
+      CardCollection.getCardById("villentretenmerth") :+
+      CardCollection.getCardById("decoy")
     val mockHand = mockCards :+
       CardCollection.getCardById("arachas2")
     val mockDeck = mockCards :+
@@ -64,7 +65,7 @@ object GameManager {
         faction = Nilfgaard,
         hand = Hand(mockHand),
         deck = Deck(mockDeck),
-        leader = CardCollection.getCardById("emhyrempororofnilfgaard"),
+        leader = CardCollection.getCardById("emhyremperorofnilfgaard"),
         leaderEnabled = true,
         discardPile = DiscardPile(Nil),
         life = 2,

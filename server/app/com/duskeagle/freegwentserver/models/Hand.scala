@@ -15,6 +15,7 @@ case class Hand(
     }
   }
   def remove(card: String): Hand = remove(CardCollection.getCardById(card))
+  def add(card: Card): Hand = add(List(card))
   def add(cardsToAdd: List[Card]): Hand = {
     copy(cards = cards ++ cardsToAdd)
   }

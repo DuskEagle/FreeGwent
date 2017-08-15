@@ -285,7 +285,6 @@ case class InGameState(
       restOfEvents.headOption match {
         case None =>
         case Some(ev) =>
-          val revivedCard = Card
           newPlayer = newPlayer.copy(discardPile = newPlayer.discardPile.remove(ev.cardId))
           val newGameState = resolveCardEffects(newPlayer, newBoard, ev, restOfEvents.tail)
           newBoard = newGameState.board
@@ -303,6 +302,16 @@ case class InGameState(
       val musterResult = muster(card, row, newPlayer, newBoard)
       newPlayer = musterResult._1
       newBoard = musterResult._2
+    }
+    if (card.hasDecoy) {
+      restOfEvents.headOption match {
+        case None => IllegalMoveException("Decoy did not return a card to our hand.")
+        case Some(ev) =>
+          newBoard = newBoard.removeCard(ev.cardId, row)
+          newPlayer = newPlayer.copy(
+            hand = newPlayer.hand.add(CardCollection.getCardById(ev.cardId))
+          )
+      }
     }
 
     if (card.isScorch) {
@@ -366,17 +375,15 @@ case class InGameState(
     if (playerId == player1.id) {
       val (newCardRow, newPlayer2) = scorchRow(board.melee2, player2)
       copy(
-        board = board.copy(
-          melee2 = newCardRow
-        ),
-        player2 = newPlayer2)
+        board = board.copy(melee2 = newCardRow),
+        player2 = newPlayer2
+      )
     } else {
       val (newCardRow, newPlayer1) = scorchRow(board.melee1, player1)
       copy(
-        board = board.copy(
-          melee1 = newCardRow
-        ),
-        player1 = newPlayer1)
+        board = board.copy(melee1 = newCardRow),
+        player1 = newPlayer1
+      )
     }
   }
 
@@ -384,17 +391,15 @@ case class InGameState(
     if (playerId == player1.id) {
       val (newCardRow, newPlayer2) = scorchRow(board.ranged2, player2)
       copy(
-        board = board.copy(
-          ranged2 = newCardRow
-        ),
-        player2 = newPlayer2)
+        board = board.copy(ranged2 = newCardRow),
+        player2 = newPlayer2
+      )
     } else {
       val (newCardRow, newPlayer1) = scorchRow(board.ranged1, player1)
       copy(
-        board = board.copy(
-          ranged1 = newCardRow
-        ),
-        player1 = newPlayer1)
+        board = board.copy(ranged1 = newCardRow),
+        player1 = newPlayer1
+      )
     }
   }
 
@@ -402,17 +407,14 @@ case class InGameState(
     if (playerId == player1.id) {
       val (newCardRow, newPlayer2) = scorchRow(board.siege2, player2)
       copy(
-        board = board.copy(
-          siege2 = newCardRow
-        ),
+        board = board.copy(siege2 = newCardRow),
         player2 = newPlayer2)
     } else {
       val (newCardRow, newPlayer1) = scorchRow(board.siege1, player1)
       copy(
-        board = board.copy(
-          siege1 = newCardRow
-        ),
-        player1 = newPlayer1)
+        board = board.copy(siege1 = newCardRow),
+        player1 = newPlayer1
+      )
     }
   }
 

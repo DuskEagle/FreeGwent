@@ -84,6 +84,10 @@ case class Card(
     attributes.contains(Muster)
   }
 
+  def hasDecoy: Boolean = {
+    attributes.contains(Decoy)
+  }
+
 }
 
 object Card {

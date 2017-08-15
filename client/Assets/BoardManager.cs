@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using RSG;
 using UnityEngine;
 using FreeGwent;
@@ -42,6 +41,7 @@ public class BoardManager : MonoBehaviour {
         handRow.Populate(gameState.hand);
         UpdateCombatRows(boardState);
         UpdateHorns(boardState);
+        UpdateLeaders(gameState);
         UpdateWeather(boardState);
         UpdateDiscardPiles(gameState);
         UpdateDeckCounts(gameState);
@@ -66,6 +66,11 @@ public class BoardManager : MonoBehaviour {
         ourMeleeHorn.Populate(boardState.melee1.horn);
         ourRangedHorn.Populate(boardState.ranged1.horn);
         ourSiegeHorn.Populate(boardState.siege1.horn);
+    }
+
+    private void UpdateLeaders(GameState gameState) {
+        theirLeader.Populate(new List<DeserializedCard>{ gameState.theirLeader });
+        ourLeader.Populate(new List<DeserializedCard>{ gameState.ourLeader });
     }
 
     private void UpdateWeather(BoardState boardState) {

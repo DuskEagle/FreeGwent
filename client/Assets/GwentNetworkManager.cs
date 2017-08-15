@@ -204,6 +204,10 @@ public class GwentNetworkManager : MonoBehaviour {
         });
     }
 
+    public void SendTurn(IList<TurnEvent> events) {
+        SendTurn(Promise<IList<TurnEvent>>.Resolved(events));
+    }
+
     private void WaitForOurTurn() {
         ReceiveGameState().Then(gameState => {
             boardManager.UpdateBoard(gameState);

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using FreeGwent;
 
 [Serializable]
-public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler {
+public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler {
 
     public CombatType? reviveRow;
 
@@ -97,8 +97,12 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData) {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
-        CardRow cr = eventData.pointerDrag.GetComponent<CardRow>();
-        if (IsScorch() && (cr == null || cr != this.hand)) {
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+        int hoveringOverHand = raycastResults.FindIndex(rr => {
+            return rr.gameObject == hand.gameObject;
+        });
+        if (IsScorch() && hoveringOverHand == -1) {
             this.hand.Scorch(this);
         } else {
             this.transform.SetParent(beginDragRow);
@@ -109,6 +113,22 @@ public class InGameCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
             this.cardRow.UpdateCardOrder();
         }
         Destroy(placeholder);
+    }
+
+    public void OnDrop(PointerEventData eventData) {
+        InGameCard decoy = eventData.pointerDrag.GetComponent<InGameCard>();
+        if (decoy && decoy.HasDecoy() && cardRow is CombatCardRow) {
+            TurnEvent ev1 = new TurnEvent(decoy.id, cardRow.rowName);
+            TurnEvent ev2 = new TurnEvent(id, hand.rowName);
+            hand.RemoveCard(decoy);
+            cardRow.AddCard(decoy, true);
+            cardRow.RemoveCard(this);
+            hand.AddCard(this, true);
+            GwentNetworkManager gwn = (GwentNetworkManager)FindObjectOfType(typeof(GwentNetworkManager));
+            gwn.SendTurn(new List<TurnEvent>{ ev1, ev2 });
+        } else {
+            this.transform.parent.SendMessage("OnDrop", eventData);
+        }
     }
 
     public TurnEvent SetCardRow(CardRow row) {

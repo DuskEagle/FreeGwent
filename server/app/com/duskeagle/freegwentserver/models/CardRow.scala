@@ -5,6 +5,7 @@ import play.api.libs.json.{JsPath, Json, Reads, Writes}
 import play.api.libs.functional.syntax._
 
 case class CardRow(
+  combatType: CombatType,
   cards: List[Card],
   horn: Option[Card]
 ) {
@@ -123,14 +124,24 @@ case class CardRow(
     copy(cards = cards.filter(f))
   }
 
+  def remove(cardId: String): CardRow = {
+    cards.find { card =>
+      card.id == cardId
+    } match {
+      case None => throw IllegalMoveException(s"Card $cardId not found in CardRow.")
+      case Some(card) => copy(cards = cards.diff(List(card)))
+    }
+  }
+
 }
 
 object CardRow {
 
   implicit val format = Json.format[CardRow]
 
-  def empty: CardRow = {
+  def empty(ct: CombatType): CardRow = {
     CardRow(
+      combatType = ct,
       cards = Nil,
       horn = None
     )
